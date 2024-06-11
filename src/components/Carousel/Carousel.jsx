@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import { useRef } from 'react';
-import MovieCard from '../MovieCard/MovieCard';
-import styles from './carousel.module.scss';
+import { useRef } from "react";
+import MovieCard from "../MovieCard/MovieCard";
+import styles from "./carousel.module.scss";
 import {
   IoIosArrowDroprightCircle,
   IoIosArrowDropleftCircle,
-} from 'react-icons/io';
+} from "react-icons/io";
 
 const Carousel = ({ list = [] }) => {
   const carouselRef = useRef();
@@ -14,19 +14,16 @@ const Carousel = ({ list = [] }) => {
   const handleArrowClick = (type) => {
     const movieCardWidth = movieCardRef.current?.offsetWidth;
 
-    if (type === 'left') {
-      carouselRef.current.scroll({
-        top: 0,
-        left: carouselRef.current.scrollLeft - movieCardWidth,
-        behavior: 'smooth',
-      });
-    } else {
-      carouselRef.current.scroll({
-        top: 0,
-        left: carouselRef.current.scrollLeft + movieCardWidth,
-        behavior: 'smooth',
-      });
-    }
+    const value =
+      type === "left"
+        ? carouselRef.current.scrollLeft - movieCardWidth
+        : carouselRef.current.scrollLeft + movieCardWidth;
+
+    carouselRef.current.scroll({
+      top: 0,
+      left: value,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -35,7 +32,7 @@ const Carousel = ({ list = [] }) => {
         <IoIosArrowDropleftCircle
           className={styles.genericIcon}
           onClick={() => {
-            handleArrowClick('left');
+            handleArrowClick("left");
           }}
         />
         <IoIosArrowDroprightCircle
