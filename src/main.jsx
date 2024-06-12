@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
+import App, { appLoader } from "./App.jsx";
 import ErrorPage from "../routes/ErrorPage/ErrorPage.jsx";
 import About from "../routes/About/About.jsx";
 import Contacts from "../routes/Contacts/Contacts.jsx";
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     element: <DefaultLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { path: "/", element: <App /> },
+      { path: "/", element: <App />, loader: appLoader },
       {
         path: "about",
         element: <About />,

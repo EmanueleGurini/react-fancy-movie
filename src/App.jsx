@@ -1,50 +1,57 @@
-import { useEffect, useState } from "react";
 import styles from "./app.module.scss";
 import HeroComponent from "./components/HeroComponent/HeroComponent";
 import Carousel from "./components/Carousel/Carousel";
+import { useLoaderData } from "react-router-dom";
 
 function App() {
-  const [popularList, setPopularList] = useState([]);
-  const [topRatedList, setTopRatedList] = useState([]);
-
-  useEffect(() => {
-    fetch("https://api.themoviedb.org/3/movie/popular", {
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${import.meta.env.AUTH_KEY}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setPopularList(data.results.filter((_, index) => index < 8));
-      });
-
-    fetch("https://api.themoviedb.org/3/movie/top_rated", {
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${import.meta.env.AUTH_KEY}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setTopRatedList(data.results.filter((_, index) => index < 8));
-      });
-  }, []);
+  const movies = useLoaderData();
 
   return (
     <main className={styles.mainContainer}>
-      <HeroComponent
-        imageUrl={popularList[0]?.backdrop_path}
-        title={popularList[0]?.original_title}
-      />
+      <HeroComponent imageUrl={movies.hero.img} title={movies.hero.title} />
       <section className={styles.carouselSection}>
-        <Carousel list={popularList} />
+        <Carousel list={movies.popdata} />
       </section>
-      <section className={styles.carouselSection}>
-        <Carousel list={topRatedList} />
-      </section>
+      {movies.toprated && (
+        <section className={styles.carouselSection}>
+          <Carousel list={movies.toprated} />
+        </section>
+      )}
     </main>
   );
 }
+
+export const appLoader = async () => {
+  const resPopular = await fetch("https://api.themoviedb.org/3/movie/popular", {
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${import.meta.env.VITE_AUTH_KEY}`,
+    },
+  });
+
+  const resTopRated = await fetch(
+    "https://api.themoviedb.org/3/movie/top_rated",
+    {
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_AUTH_KEY}`,
+      },
+    }
+  );
+
+  const popularData = await resPopular.json();
+  const topRatedData = await resTopRated.json();
+
+  const movies = {
+    hero: {
+      img: popularData.results[0]?.backdrop_path,
+      title: popularData.results[0]?.title,
+    },
+    popdata: popularData.results.filter((_, index) => index < 8),
+    toprated: topRatedData.results.filter((_, index) => index < 8),
+  };
+
+  return movies;
+};
 
 export default App;
