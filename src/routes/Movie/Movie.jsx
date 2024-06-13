@@ -10,6 +10,7 @@ export default function Movie() {
     <>
       <div>
         <HeroComponent title={movie.title} imageUrl={movie.backdrop_path} />
+        <h1>Titolo: {movie.title}</h1>
       </div>
     </>
   );
