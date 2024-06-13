@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
-import styles from './modal.module.scss';
-import { IoMdCloseCircle } from 'react-icons/io';
+import styles from "./modal.module.scss";
+import { NavLink } from "react-router-dom";
+import { IoMdCloseCircle } from "react-icons/io";
 
 const Modal = ({ handleCloseClick, movie }) => {
   const { title, overview, backdrop_path } = movie;
@@ -19,6 +20,7 @@ const Modal = ({ handleCloseClick, movie }) => {
             onClick={handleCloseClick}
           />
         </div>
+        <NavLink to={`catalogo/${movie.id}`}>Vai al film</NavLink>
       </div>
     </div>
   );

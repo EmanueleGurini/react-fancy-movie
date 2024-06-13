@@ -2,6 +2,8 @@ import styles from "./app.module.scss";
 import HeroComponent from "./components/HeroComponent/HeroComponent";
 import Carousel from "./components/Carousel/Carousel";
 import { useLoaderData } from "react-router-dom";
+import { fetchMovies } from "./utils/api";
+import { topRatedURL, popularURL } from "./utils/endpoints";
 
 function App() {
   const movies = useLoaderData();
@@ -22,25 +24,10 @@ function App() {
 }
 
 export const appLoader = async () => {
-  const resPopular = await fetch("https://api.themoviedb.org/3/movie/popular", {
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_AUTH_KEY}`,
-    },
-  });
-
-  const resTopRated = await fetch(
-    "https://api.themoviedb.org/3/movie/top_rated",
-    {
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_AUTH_KEY}`,
-      },
-    }
-  );
-
-  const popularData = await resPopular.json();
-  const topRatedData = await resTopRated.json();
+  const [popularData, topRatedData] = await Promise.all([
+    fetchMovies(popularURL),
+    fetchMovies(topRatedURL),
+  ]);
 
   const movies = {
     hero: {

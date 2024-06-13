@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
-import styles from './moviecard.module.scss';
-import Modal from '../Modal/Modal';
+import { useState } from "react";
+import styles from "./moviecard.module.scss";
+import Modal from "../Modal/Modal";
 
-const MovieCard = ({ title = 'Movie Title', imgUrl, refProp, movie }) => {
+const MovieCard = ({ title = "Movie Title", imgUrl, refProp, movie }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleCardClick = () => {

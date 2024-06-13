@@ -1,14 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App, { appLoader } from "./App.jsx";
-import ErrorPage from "../routes/ErrorPage/ErrorPage.jsx";
-import About from "../routes/About/About.jsx";
-import Contacts from "../routes/Contacts/Contacts.jsx";
+import ErrorPage from "./routes/ErrorPage/ErrorPage.jsx";
+import About from "./routes/About/About.jsx";
+import Contacts from "./routes/Contacts/Contacts.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./index.css";
 import DefaultLayout from "./Layouts/DefaultLayout/DefaultLayout.jsx";
 
-// New block - start
+import Movie from "./routes/Movie/Movie.jsx";
+import { movieLoader } from "./routes/Movie/Movie.jsx";
+import "./index.css";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,10 +26,10 @@ const router = createBrowserRouter([
         path: "contacts",
         element: <Contacts />,
       },
+      { path: "catalogo/:id", element: <Movie />, loader: movieLoader },
     ],
   },
 ]);
-// New block - end
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
