@@ -29,5 +29,11 @@
     border: none;
     padding: 8px;
     box-shadow: 0 0 4px variables.$primary-color;
+    cursor: pointer;
+    transition: 0.25s all;
+
+    &:hover {
+      transform: scale(1.08);
+    }
   }
 }

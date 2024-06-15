@@ -1,32 +1,26 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useContext } from "react";
+import { globalContext } from "../../App";
 import styles from "./moviecard.module.scss";
-import Modal from "../Modal/Modal";
 
-const MovieCard = ({ title = "Movie Title", imgUrl, refProp, movie }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+const MovieCard = ({ movie, refProp }) => {
+
+  const { setIsModalVisible, setMovieDetails } = useContext(globalContext);
 
   const handleCardClick = () => {
     setIsModalVisible(true);
-  };
+    setMovieDetails(movie);
+  }
 
   return (
     <>
       <div ref={refProp} className={styles.movieCard} onClick={handleCardClick}>
         <img
-          src={`https://image.tmdb.org/t/p/w500${imgUrl}`}
+          src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
           alt="movie-card-img"
         />
-        <p>{title}</p>
+        <p>{movie.original_title}</p>
       </div>
-      {isModalVisible && (
-        <Modal
-          handleCloseClick={() => {
-            setIsModalVisible(false);
-          }}
-          movie={movie}
-        />
-      )}
     </>
   );
 };

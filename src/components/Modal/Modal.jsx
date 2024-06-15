@@ -2,9 +2,14 @@
 import styles from "./modal.module.scss";
 import { NavLink } from "react-router-dom";
 import { IoMdCloseCircle } from "react-icons/io";
+import { useContext } from "react";
+import { globalContext } from "../../App";
 
-const Modal = ({ handleCloseClick, movie }) => {
-  const { title, overview, backdrop_path } = movie;
+const Modal = () => {
+
+  const { setIsModalVisible, movieDetails } = useContext(globalContext);
+
+  const { title, overview, backdrop_path, id } = movieDetails;
 
   return (
     <div className={styles.modalContainer}>
@@ -17,10 +22,10 @@ const Modal = ({ handleCloseClick, movie }) => {
         <div className={styles.closeButtonContainer}>
           <IoMdCloseCircle
             className={styles.iconClose}
-            onClick={handleCloseClick}
+            onClick={() => setIsModalVisible(false)}
           />
         </div>
-        <NavLink to={`catalogo/${movie.id}`}>Vai al film</NavLink>
+        <NavLink to={`catalogo/${id}`}>Vai al film</NavLink>
       </div>
     </div>
   );

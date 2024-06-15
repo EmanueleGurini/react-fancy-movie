@@ -47,8 +47,6 @@ const Carousel = ({ list = [] }) => {
           return (
             <MovieCard
               refProp={movieCardRef}
-              title={movie.original_title}
-              imgUrl={movie.backdrop_path}
               movie={movie}
               key={index}
             />
